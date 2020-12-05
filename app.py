@@ -91,7 +91,7 @@ class Contacts(db.Model):
     id = db.Column(db.Integer(), primary_key=True, unique=True, index=True)
     name = db.Column(db.String(150), nullable=False)
     phone = db.Column(db.String(20), nullable=False)
-    date = db.Column(db.DateTime, default=datetime.now())
+    date = db.Column(db.String(100), nullable=False)
     status = db.Column(db.String(40), default='В обработке')
 
     def __repr__(self):
@@ -108,7 +108,7 @@ class Orders(db.Model):
     id = db.Column(db.Integer(), primary_key=True, unique=True, index=True)
     name = db.Column(db.String(150), nullable=False)
     phone = db.Column(db.String(20), nullable=False)
-    date = db.Column(db.DateTime, default=datetime.now())
+    date = db.Column(db.String(100), nullable=False)
     status = db.Column(db.String(40), default='В обработке')
     company = db.Column(db.String(100), nullable=True)
     address = db.Column(db.String(100), nullable=True)
@@ -171,7 +171,7 @@ def add_orders():
     print(data)
     datenow = datetime.now()
     try:
-        order = Orders(data['name'], data['phone'], datenow, 'В обработке',
+        order = Orders(data['name'], data['phone'], str(datenow), 'В обработке',
                        data['company'], data['address'], data['inn'], data['kpp'],
                        data['bik'], data['city'], data['country'], data['addresspost'],
                        data['post'], data['pay'], data['scope'], data['price'], data['product'])
@@ -196,7 +196,7 @@ def add_contact():
     print(data)
     datenow = datetime.now()
     try:
-        contact = Contacts(data['name'], data['phone'], datenow)
+        contact = Contacts(data['name'], data['phone'], str(datenow))
         db.session.add(contact)
         db.session.commit()
         return Response(
