@@ -169,9 +169,10 @@ def get_products_byid(category, section, id):
 def add_orders():
     data = request.json
     print(data)
-    datenow = datetime.now()
+    now = datetime.now()
+    order_time = f'{now.hour}:{now.minute} {now.day}.{now.month}.{now.year}'
     try:
-        order = Orders(data['name'], data['phone'], str(datenow), 'В обработке',
+        order = Orders(data['name'], data['phone'], order_time, 'В обработке',
                        data['company'], data['address'], data['inn'], data['kpp'],
                        data['bik'], data['city'], data['country'], data['addresspost'],
                        data['post'], data['pay'], data['scope'], data['price'], data['product'])
